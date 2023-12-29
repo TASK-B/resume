@@ -30,7 +30,11 @@
       content="프론트엔드 엔지니어, 최대율의 이력서입니다."
     />
     <meta name="twitter:image" content="/resume/resume-cover.c8f03ded.png" />
-    <link rel="stylesheet" type="text/css" href="./pretendard.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./assets/fonts/pretendard.css"
+    />
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
@@ -50,7 +54,37 @@
       <section>
         <h2>Profile<span class="period-mark">.</span></h2>
         <div class="row">
-          <div class="profile"></div>
+          <div
+            class="profile"
+            style="background-image: url('./assets/imgs/profile.jpeg')"
+          ></div>
+          <div class="profile-info">
+            <div class="profile-info-block">
+              <div class="label">이름</div>
+              <div class="grep"></div>
+              <div class="value">최대율 (CHOI DAE YOUL)</div>
+            </div>
+            <div class="profile-info-block">
+              <div class="label">생년월일</div>
+              <div class="grep"></div>
+              <div class="value">1995.12.18</div>
+            </div>
+            <div class="profile-info-block">
+              <div class="label">이메일</div>
+              <div class="grep"></div>
+              <div class="value">nalen7@naver.com</div>
+            </div>
+            <div class="profile-info-block">
+              <div class="label">연락처</div>
+              <div class="grep"></div>
+              <div class="value">010-2923-1151</div>
+            </div>
+            <div class="profile-info-block">
+              <div class="label">희망연봉</div>
+              <div class="grep"></div>
+              <div class="value">54M+</div>
+            </div>
+          </div>
         </div>
       </section>
       <section>
@@ -104,12 +138,16 @@
                 전단, 지류, 카탈로그, 모바일 콘텐츠와 같은 다양한 형태와
                 사이즈의 인쇄물을 누구나 간편하게 제작, 공유할 수 있으며,
                 브랜드와 지점들의 출고 프로세스를 통합 관리 할 수 있는
-                플랫폼입니다. 처음 2명이서 개발을 시작하였으나, 얼마 지나지 않고
-                단독으로 프로젝트를 맡게되어 PE의 역할을 수행하게 되었습니다.
+                플랫폼입니다.
               </p>
               <h5>What did I do<span class="period-mark">.</span></h5>
+              <p>
+                초기 2명이서 MVP 모델 개발 이후에는 혼자 풀스택으로 개발을
+                진행했으며, 기획/설계, 일정산정, 외부 미팅과 같은 PE의 역할을
+                수행했습니다.
+              </p>
+              <h5>Performance<span class="period-mark">.</span></h5>
               <ul>
-                <li>PE로서 플랫폼 런칭부터 고도화 까지 풀사이클 경험</li>
                 <li>
                   지류 템플릿 제작 관련 초기 설정부터 로드 방식, 템플릿 모듈화,
                   구조 단순화를 통해 개발 생산성 300% 향상
@@ -173,30 +211,34 @@
               </span>
               <h5>Description<span class="period-mark">.</span></h5>
               <p>
-                AI Image 합성 관련 R&D로 시작한 Painting Editor 산출물입니다. 총
-                3명이 개발하였으며, 저는 아키텍처 디자인과 프론트엔드 에디터
-                인터페이스를 개발했습니다.
+                SD2 기반의 AI Image 합성 관련 R&D로 시작한 AI Painting Editor
+                입니다.
               </p>
               <h5>What did I do<span class="period-mark">.</span></h5>
+              <p>
+                총 3명이 개발하였으며, 저는 아키텍처 설계와 프론트엔드 에디터
+                인터페이스를 개발했습니다.
+              </p>
+              <h5>Performance<span class="period-mark">.</span></h5>
               <ul>
-                <li>SD2, ControlNet 기반 AI Image painting Editor R&D</li>
-                <li>Prompt 입력방식 전환 (영문→한글)</li>
-                <li>Prompt 키워드 추출, 적합한 Prompt 추천</li>
                 <li>
                   CheckPoint, Texture, Lora, Base/Native Prompt 패키징을 통해
-                  좀더 정확한 AI 이미지 생성 유도
+                  정확한 AI 이미지 생성 유도
                 </li>
-                <li>T2I/I2I</li>
-                <li>Inpaint</li>
-                <li>OutPaint</li>
-                <li>Text Effect</li>
-                <li>3D 오브젝트를 통한 구도조정 전처리 후 AI 이미지 생성</li>
-                <li>OpenPose 인물 생성, 클라우드 공유 시스템</li>
-                <li>오브젝트 자동선택 → Delete or Inpaint</li>
-                <li>배경 제거(Lama Cleaner)</li>
-                <li>스케치를 기반으로 AI 이미지 생성</li>
-                <li>다양한 타입의 레이어를 AI로 병합 후 새로운 이미지 생성</li>
-                <li>Product Key Visual 이미지 생성</li>
+                <li>T2I, I2I 기능 개발</li>
+                <li>AI Inpaint 기능 개발</li>
+                <li>AI OutPaint 기능 개발</li>
+                <li>AI Text Effect 기능 개발</li>
+                <li>AI 3D Object Merge 기능 개발</li>
+                <li>AI OpenPose Image 생성, 클라우드 공유 시스템 기능 개발</li>
+                <li>
+                  AI Object Auto Detection을 통한 배경제거와 Inpaint 기능 개발
+                </li>
+                <li>AI Sketch Image 생성 기능 개발</li>
+                <li>
+                  다양한 타입의 레이어를 AI Merge 이후 새로운 이미지 생성 기능
+                  개발
+                </li>
                 <li>
                   Kafka 기반의 Ready-Assign-Queue 시스템 구현 (P2P GPU Node Pool
                   시스템에 적용)
@@ -244,14 +286,14 @@
               <a
                 href="https://youl-dev.notion.site/StockMoA-fd819a70e5084c84865a56c9e01d25cb"
                 target="_blank"
-                >졸업 프로젝트</a
+                >StockMoA (졸업 프로젝트)</a
               >
             </li>
             <li>
               <a
                 href="https://youl-dev.notion.site/0a9b0328f3e44b519cb9cb24e08de7b0"
                 target="_blank"
-                >중간 프로젝트</a
+                >다모여 (중간 프로젝트)</a
               >
             </li>
           </ul>
@@ -273,7 +315,7 @@
               <a
                 href="https://youl-dev.notion.site/358555d180a94382a350f5e0bd9b9fa3"
                 target="_blank"
-                >프로젝트 상세</a
+                >트럭왔냠 (출품작)</a
               >
             </li>
             <li>
@@ -304,8 +346,9 @@
               최적의 결과를 낼 수 있도록 노력합니다.
             </li>
             <li>
-              회사 혹은 팀의 프로세스 및 문화를 개선하거나 바꾸려는 시도를
-              적극적으로 합니다.
+              그저 직장인이 아닌 개발자로서 저와 동료들의 행복을 추구합니다.
+              생산성을 높이기 위한 직관적인 구조를 항상 고민하고 발전시키고
+              있습니다.
             </li>
           </ul>
         </div>
@@ -313,66 +356,19 @@
           <h3>Communication<span class="period-mark">.</span></h3>
           <ul>
             <li>직위 및 포지션에 관계없이 적극적으로 생각을 표현합니다.</li>
-            <li>지적 겸손함을 유지하기 위해 노력합니다.</li>
-            <li>커뮤니케이션은 적은 것보다는 많은게 좋다고 믿습니다.</li>
+            <li>
+              과시하거나 무시하지 않습니다. 기본적으로 배우고자하는 스탠스를
+              가지고 있으며, 질의응답에 자유롭습니다.
+            </li>
+            <li>
+              합리적인 의사결정을 위해 다른 사람의 의견을 귀담아 듣는 편입니다.
+            </li>
           </ul>
         </div>
         <div class="other">
-          <h3>Web<span class="period-mark">.</span></h3>
+          <h3>Differences<span class="period-mark">.</span></h3>
           <ul>
-            <li>Search Engine Optimization 경험이 있습니다.</li>
-            <li>
-              Internet Explorer, Safari를 비롯해, 다양한 OS 및 브라우저를 지원할
-              수 있습니다.
-            </li>
-            <li>모바일 브라우저에서의 트러블 슈팅 경험이 많습니다.</li>
-          </ul>
-        </div>
-        <div class="other">
-          <h3>JavaScript<span class="period-mark">.</span></h3>
-          <ul>
-            <li>JavaScript와 TypeScript에 능숙합니다.</li>
-            <li>
-              CommonJS, ES Modules의 모듈 시스템에 대해서 이해하고 이에 따라
-              적절한 도구를 활용합니다.
-            </li>
-            <li>Node.js 생태계의 툴링에 익숙합니다.</li>
-            <li>Yarn과 Yarn Berry 사용을 선호합니다.</li>
-          </ul>
-        </div>
-        <div class="other">
-          <h3>React<span class="period-mark">.</span></h3>
-          <ul>
-            <li>
-              React hooks를 능숙하게 사용하고, 거의 모든 컴포넌트를 함수로
-              만듭니다. hook을 이용해 공통 비즈니스 로직을 적절히 모듈화해
-              사용할 수 있습니다.
-            </li>
-            <li>
-              각종 컴포넌트 디자인 패턴에 능숙하며, 합리적인 방식으로 컴포넌트를
-              분리합니다.
-            </li>
-            <li>
-              PureComponent와 React.memo에 대해서 이해하고 적절한 상황에서만
-              사용합니다.
-            </li>
-            <li>Storybook을 사용한 컴포넌트 주도 개발을 할 수 있습니다.</li>
-            <li>Testing Library를 사용하여 테스트코드를 작성할 수 있습니다.</li>
-          </ul>
-        </div>
-        <div class="other">
-          <h3>DevOps<span class="period-mark">.</span></h3>
-          <ul>
-            <li>
-              AWS S3, CloudFront, Lambda@Edge 등을 이용해 어플리케이션 레이어를
-              구성할 수 있습니다.
-            </li>
-            <li>
-              GitHub Actions, Travis, GitLab CI 등의 CI를 구성할 수 있습니다.
-            </li>
-            <li>
-              반복적인 업무 해소를 위해 Node.js로 CLI 도구를 만들 수 있습니다.
-            </li>
+            <li>개발자가 디자인도 잘함(?)</li>
           </ul>
         </div>
       </section>

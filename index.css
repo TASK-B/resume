@@ -91,24 +91,24 @@ select {
   text-transform: none;
 }
 
-[type='button'],
-[type='reset'],
-[type='submit'],
+[type="button"],
+[type="reset"],
+[type="submit"],
 button {
   -webkit-appearance: button;
 }
 
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner,
 button::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
 
-[type='button']:-moz-focusring,
-[type='reset']:-moz-focusring,
-[type='submit']:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring,
 button:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
@@ -134,23 +134,23 @@ textarea {
   overflow: auto;
 }
 
-[type='checkbox'],
-[type='radio'] {
+[type="checkbox"],
+[type="radio"] {
   box-sizing: border-box;
   padding: 0;
 }
 
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
-[type='search'] {
+[type="search"] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
 
-[type='search']::-webkit-search-decoration {
+[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -189,21 +189,9 @@ body,
 html {
   font-size: 16px;
   word-break: keep-all;
-  font-family:
-    Pretendard,
-    -apple-system,
-    BlinkMacSystemFont,
-    Bazier Square,
-    Noto Sans KR,
-    Segoe UI,
-    Apple SD Gothic Neo,
-    Roboto,
-    Helvetica Neue,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol,
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, Bazier Square,
+    Noto Sans KR, Segoe UI, Apple SD Gothic Neo, Roboto, Helvetica Neue, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
     Noto Color Emoji;
   letter-spacing: -0.3px;
   color: #222;
@@ -225,11 +213,17 @@ body:before {
   z-index: 1;
   top: 0;
   display: block;
-  content: '';
+  content: "";
   width: 100%;
   height: 10px;
   background: #00d2ff;
-  background: -webkit-gradient(linear, left top, right top, from(#3a7bd5), to(#00d2ff));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#3a7bd5),
+    to(#00d2ff)
+  );
   background: linear-gradient(90deg, #3a7bd5, #00d2ff);
 }
 
@@ -303,13 +297,13 @@ ul > li:before {
   position: absolute;
   left: 0;
   display: inline-block;
-  content: '•';
+  content: "•";
   color: #3a7bd5;
 }
 
 .container {
   width: 100%;
-  max-width: 50rem;
+  max-width: 64rem;
   margin: auto;
 }
 
@@ -395,6 +389,30 @@ ul > li:before {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  border-radius: 50%;
+}
+
+.profile-info {
+  padding-left: 2.5rem;
+}
+.profile-info-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 1rem;
+  margin-bottom: 0.6rem;
+}
+.profile-info-block > .label {
+  width: 5rem;
+  font-weight: bold;
+}
+.profile-info-block > .grep {
+  width: 3px;
+  height: 1rem;
+  background: #000;
+}
+.profile-info-block > .value {
+  padding-left: 0.6rem;
 }
 
 /*# sourceMappingURL=/resume/main.32ee5ef9.css.map */
