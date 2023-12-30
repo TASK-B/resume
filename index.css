@@ -393,6 +393,7 @@ ul > li:before {
 }
 .profile-info-block {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 0.5rem;
   height: 1rem;
@@ -402,12 +403,13 @@ ul > li:before {
   font-weight: bold;
 }
 .profile-info-block > .grep {
-  width: 3px;
+  width: 2px;
   height: 1rem;
   background: #000;
 }
 .profile-info-block > .value {
-  padding-left: 0.6rem;
+  padding-left: 0.5rem;
+  width: 12rem;
 }
 
 .stack-info {
@@ -415,7 +417,7 @@ ul > li:before {
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
-  padding-left: 2.5rem;
+  padding-left: 1rem;
 }
 .stack-info-block {
   display: flex;
@@ -428,12 +430,13 @@ ul > li:before {
   font-weight: bold;
 }
 .stack-info-block > .grep {
-  width: 3px;
+  width: 2px;
   height: 1rem;
   background: #000;
 }
 .stack-info-block > .value {
-  padding-left: 0.6rem;
+  padding-left: 0.5rem;
+  width: 30rem;
 }
 
 .certificate-box {
