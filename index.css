@@ -385,7 +385,7 @@ ul > li:before {
   width: 16rem;
   height: 16rem;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
 }
 .profile-info {
