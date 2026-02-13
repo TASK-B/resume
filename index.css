@@ -1281,7 +1281,6 @@ a:focus-visible {
 /* ===== NAV ACTIVE ===== */
 .nav-link.active {
   color: #b32929;
-  background: rgba(179, 41, 41, 0.08);
   font-weight: 600;
 }
 
