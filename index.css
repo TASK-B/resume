@@ -243,7 +243,7 @@ body:after {
   content: "";
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, #333, #5a2020, #333);
+  background: linear-gradient(90deg, #333, #8b3535, #333);
 }
 
 /* ===== NAVIGATION ===== */
@@ -524,7 +524,7 @@ ul > li:before {
 
 /* ===== NAME HIGHLIGHT ===== */
 .name-highlight {
-  color: #724f4f;
+  color: #d19310;
 }
 
 /* ===== BIG PARAGRAPH ===== */
