@@ -574,7 +574,7 @@ ul > li:before {
   font-weight: 800;
   color: #111;
   margin: 0 0 0.15rem;
-  letter-spacing: -0.5px;
+  letter-spacing: 1.5px;
 }
 
 .profile-name-en {
@@ -734,12 +734,13 @@ a.profile-contact-value:hover {
 }
 
 .tech-tag {
+  --brand-color: #b32929;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   padding: 0.2rem 0.6rem;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
+  background: color-mix(in srgb, var(--brand-color) 6%, #fff);
+  border: 1px solid color-mix(in srgb, var(--brand-color) 20%, #e5e7eb);
   border-radius: 0.35rem;
   font-size: 0.82rem;
   color: #444;
@@ -752,7 +753,7 @@ a.profile-contact-value:hover {
   width: 0.9em;
   height: 0.9em;
   flex-shrink: 0;
-  opacity: 0.7;
+  opacity: 0.85;
   transition: opacity 0.15s ease;
 }
 
@@ -761,9 +762,9 @@ a.profile-contact-value:hover {
 }
 
 .tech-tag:hover {
-  background: #fef2f2;
-  border-color: #e8bfbf;
-  color: #b32929;
+  background: color-mix(in srgb, var(--brand-color) 12%, #fff);
+  border-color: color-mix(in srgb, var(--brand-color) 40%, #e5e7eb);
+  color: var(--brand-color);
 }
 
 /* Inline tech in project */
@@ -837,7 +838,7 @@ a.profile-contact-value:hover {
   height: 24px;
   object-fit: contain;
   vertical-align: middle;
-  margin-right: 0.4rem;
+  margin-right: 0.2rem;
   border-radius: 4px;
 }
 
