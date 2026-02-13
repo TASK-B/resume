@@ -37,9 +37,26 @@
         </div>
       </div>
     </nav>
+    <div class="sticky-company-header" id="stickyCompanyHeader">
+      <div class="sticky-company-inner">
+        <img class="sticky-company-logo" id="stickyCompanyLogo" src="" alt="" />
+        <span class="sticky-company-name" id="stickyCompanyName"></span>
+        <span class="sticky-company-role" id="stickyCompanyRole"></span>
+        <span class="sticky-company-period" id="stickyCompanyPeriod"></span>
+      </div>
+    </div>
+    <div class="scroll-indicator" id="scrollIndicator">
+      <div class="scroll-indicator-inner">
+        <span>스크롤하여 계속 보기</span>
+        <svg class="scroll-indicator-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+        </svg>
+      </div>
+    </div>
     <main id="main-content">
       <div class="container">
-        <section id="intro" class="hero-section">
+        <div class="hero-spacer" id="heroSpacer"></div>
+        <section id="intro" class="hero-section hero-fullscreen">
           <div class="section-inner">
             <h1>
               <span class="text-gradient-far">반갑습니다,</span>
@@ -1619,6 +1636,63 @@
       window.addEventListener('scroll', updateScrollProgress, { passive: true });
       updateScrollProgress();
 
+      // Hero fullscreen effect with smooth scaling
+      const heroSection = document.querySelector('.hero-section');
+      const heroSpacer = document.getElementById('heroSpacer');
+      const scrollIndicator = document.getElementById('scrollIndicator');
+
+      const SCROLL_DISTANCE = 10; // 스크롤 거리 (px)
+      const SCALE_START = 1.1; // 시작 스케일
+      const SCALE_END = 1.0; // 종료 스케일
+      const HYSTERESIS = 0.05; // 히스테리시스 (5%) - 무한루프 방지
+
+      let ticking = false;
+      let isFullscreen = true;
+      let lastProgress = 1;
+
+      function updateHeroTransform() {
+        const scrollY = window.scrollY;
+        const progress = Math.min(Math.max(1 - scrollY / SCROLL_DISTANCE, 0), 1);
+
+        // GPU 가속을 위해 CSS 변수로 transform 값 전달
+        const scale = SCALE_END + (SCALE_START - SCALE_END) * progress;
+        heroSection.style.setProperty('--hero-scale', scale);
+        heroSection.style.setProperty('--hero-progress', progress);
+        scrollIndicator.style.setProperty('--indicator-opacity', progress);
+
+        // 히스테리시스 적용: 임계값을 넘어야만 상태 전환 (무한루프 방지)
+        if (isFullscreen && progress <= 0) {
+          heroSection.classList.remove('hero-fullscreen');
+          heroSpacer.classList.remove('active');
+          isFullscreen = false;
+        } else if (!isFullscreen && progress >= HYSTERESIS) {
+          heroSection.classList.add('hero-fullscreen');
+          heroSpacer.classList.add('active');
+          isFullscreen = true;
+        }
+
+        lastProgress = progress;
+        ticking = false;
+      }
+
+      function handleHeroScroll() {
+        if (!ticking) {
+          requestAnimationFrame(updateHeroTransform);
+          ticking = true;
+        }
+      }
+
+      // Initialize
+      if (heroSection.classList.contains('hero-fullscreen')) {
+        heroSpacer.classList.add('active');
+        heroSection.style.setProperty('--hero-scale', SCALE_START);
+        heroSection.style.setProperty('--hero-progress', 1);
+        scrollIndicator.style.setProperty('--indicator-opacity', 1);
+      }
+
+      window.addEventListener('scroll', handleHeroScroll, { passive: true });
+      updateHeroTransform();
+
       // Back to top button (hide on mobile via userAgent)
       const btn = document.querySelector('.back-to-top');
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -1686,6 +1760,73 @@
       navInner.addEventListener('scroll', updateNavScrollIndicators, { passive: true });
       window.addEventListener('resize', updateNavScrollIndicators);
       updateNavScrollIndicators();
+
+      // Mobile sticky company header
+      const stickyCompanyHeader = document.getElementById('stickyCompanyHeader');
+      const stickyCompanyLogo = document.getElementById('stickyCompanyLogo');
+      const stickyCompanyName = document.getElementById('stickyCompanyName');
+      const stickyCompanyRole = document.getElementById('stickyCompanyRole');
+      const stickyCompanyPeriod = document.getElementById('stickyCompanyPeriod');
+      const experienceSection = document.getElementById('experience');
+      const companyRows = experienceSection ? experienceSection.querySelectorAll('.row') : [];
+
+      function isMobileView() {
+        return window.innerWidth <= 960;
+      }
+
+      function updateStickyCompanyHeader() {
+        if (!isMobileView() || !experienceSection || companyRows.length === 0) {
+          stickyCompanyHeader.classList.remove('visible');
+          return;
+        }
+
+        const navHeight = document.querySelector('.nav').offsetHeight;
+        const stickyHeaderHeight = stickyCompanyHeader.offsetHeight;
+        const experienceRect = experienceSection.getBoundingClientRect();
+
+        // Experience 섹션이 화면에 보이는지 확인
+        if (experienceRect.top > navHeight + stickyHeaderHeight || experienceRect.bottom < navHeight + stickyHeaderHeight + 100) {
+          stickyCompanyHeader.classList.remove('visible');
+          return;
+        }
+
+        // 현재 보이는 회사 row 찾기
+        let activeCompany = null;
+        const checkPoint = navHeight + stickyHeaderHeight + 10;
+
+        companyRows.forEach(row => {
+          const rect = row.getBoundingClientRect();
+          if (rect.top <= checkPoint && rect.bottom > checkPoint) {
+            activeCompany = row;
+          }
+        });
+
+        if (activeCompany) {
+          const logo = activeCompany.querySelector('.company-logo');
+          const companyLink = activeCompany.querySelector('.row-left h3 a');
+          const roleEl = activeCompany.querySelector('.row-left-badges .role');
+          const periodEl = activeCompany.querySelector('.row-left-badges > span:not(.role)');
+
+          if (logo && companyLink) {
+            const companyText = companyLink.textContent.replace('.', '').trim();
+
+            if (stickyCompanyName.textContent !== companyText) {
+              stickyCompanyLogo.src = logo.src;
+              stickyCompanyLogo.alt = logo.alt;
+              stickyCompanyName.textContent = companyText;
+              stickyCompanyRole.textContent = roleEl ? roleEl.textContent : '';
+              stickyCompanyPeriod.textContent = periodEl ? periodEl.textContent.trim() : '';
+            }
+            stickyCompanyHeader.classList.add('visible');
+          }
+        } else {
+          stickyCompanyHeader.classList.remove('visible');
+        }
+      }
+
+      window.addEventListener('scroll', updateStickyCompanyHeader, { passive: true });
+      window.addEventListener('resize', updateStickyCompanyHeader, { passive: true });
+      updateStickyCompanyHeader();
     </script>
   </body>
 </html>
