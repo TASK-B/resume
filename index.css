@@ -706,7 +706,6 @@ a.profile-contact-value:hover {
 
 .stack-card:hover {
   border-color: #d0d7de;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .stack-card--core {
@@ -722,7 +721,7 @@ a.profile-contact-value:hover {
 .stack-card-label {
   font-weight: 700;
   font-size: 0.78rem;
-  color: #767676;
+  color: #926868;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 0.6rem;
