@@ -26,6 +26,7 @@
   <body>
     <a href="#main-content" class="skip-link">본문 바로가기</a>
     <nav class="nav" aria-label="섹션 네비게이션">
+      <div class="nav-scroll-wrapper">
       <div class="nav-inner">
         <a href="#intro" class="nav-link">Intro</a>
         <a href="#profile" class="nav-link">Profile</a>
@@ -33,6 +34,7 @@
         <a href="#experience" class="nav-link">Work Experience</a>
         <a href="#other" class="nav-link">Other Experiences</a>
         <a href="#ability" class="nav-link">Ability</a>
+      </div>
       </div>
     </nav>
     <main id="main-content">
@@ -1136,11 +1138,40 @@
                 link.getAttribute('href') === '#' + entry.target.id
               );
             });
+            // Auto-scroll nav to keep active link visible
+            scrollNavToActive();
           }
         });
       }, observerOptions);
 
       sections.forEach(section => observer.observe(section));
+
+      // Nav horizontal scroll indicators
+      const navInner = document.querySelector('.nav-inner');
+      const navWrapper = document.querySelector('.nav-scroll-wrapper');
+
+      function updateNavScrollIndicators() {
+        if (!navInner || !navWrapper) return;
+        const { scrollLeft, scrollWidth, clientWidth } = navInner;
+        const threshold = 4;
+        navWrapper.classList.toggle('can-scroll-left', scrollLeft > threshold);
+        navWrapper.classList.toggle('can-scroll-right', scrollLeft + clientWidth < scrollWidth - threshold);
+      }
+
+      function scrollNavToActive() {
+        const activeLink = document.querySelector('.nav-link.active');
+        if (!activeLink || !navInner) return;
+        const navRect = navInner.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        // If active link is out of visible bounds, scroll it into view
+        if (linkRect.left < navRect.left || linkRect.right > navRect.right) {
+          activeLink.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      }
+
+      navInner.addEventListener('scroll', updateNavScrollIndicators, { passive: true });
+      window.addEventListener('resize', updateNavScrollIndicators);
+      updateNavScrollIndicators();
     </script>
   </body>
 </html>
