@@ -534,6 +534,28 @@ ul > li:before {
   color: #b32929;
 }
 
+/* ===== TEXT GRADIENT - LIGHT SPREADING FROM CENTER ===== */
+.text-gradient-far {
+  background: linear-gradient(90deg, #222, #333, #2a2a2a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-to-light {
+  background: linear-gradient(90deg, #333, #555, #7a6525);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-from-light {
+  background: linear-gradient(90deg, #7a6525, #555, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ===== NAME HIGHLIGHT ===== */
 .name-highlight {
   background: linear-gradient(135deg, #d19310, #f5c842, #e8a820, #d19310);
