@@ -372,7 +372,7 @@ section:last-of-type {
 
 .hero-section .section-inner {
   background: linear-gradient(135deg, #fff 0%, #fef9f9 100%);
-  border: 1px solid #b32929;
+  border: 1px solid #b3292911;
 }
 
 @media screen and (max-width: 960px) {
@@ -1133,7 +1133,8 @@ a:focus-visible {
 
 /* ===== EXTERNAL LINK ICON ===== */
 .project a[target="_blank"]::after,
-.other a[target="_blank"]::after {
+.other a[target="_blank"]::after,
+.row-left .subsection-gap a[target="_blank"]::after {
   content: " ↗";
   font-size: 0.75em;
 }
