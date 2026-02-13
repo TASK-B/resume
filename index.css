@@ -524,7 +524,10 @@ ul > li:before {
 
 /* ===== NAME HIGHLIGHT ===== */
 .name-highlight {
-  color: #d19310;
+  background: linear-gradient(135deg, #d19310, #f5c842, #e8a820, #d19310);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ===== BIG PARAGRAPH ===== */
