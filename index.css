@@ -349,7 +349,7 @@ body:after {
 /* ===== SECTIONS ===== */
 section {
   padding: 0 2rem;
-  margin-bottom: 5rem;
+  margin-bottom: 1.5rem;
 }
 
 section:last-of-type {
@@ -367,7 +367,7 @@ section:last-of-type {
 @media screen and (max-width: 960px) {
   section {
     padding: 0 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   .section-inner {
@@ -379,7 +379,7 @@ section:last-of-type {
 /* ===== HERO SECTION ===== */
 .hero-section {
   padding-top: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .hero-section .section-inner {
