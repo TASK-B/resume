@@ -409,7 +409,7 @@ section:last-of-type {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #fff 0%, #fef9f9 100%);
+  background: linear-gradient(135deg, #fcf8f8 0%, #f8eded 100%);
   will-change: transform, opacity;
 }
 
@@ -682,8 +682,9 @@ ul > li:before {
   font-weight: 400;
   color: #111;
   margin: 0;
-  word-break: keep-all;
   text-indent: 0.6rem;
+  text-align: justify;
+  word-break: break-all;
 }
 
 @media screen and (max-width: 960px) {
@@ -1407,7 +1408,7 @@ section[id] {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.6rem 1rem;
+    padding: 0.6rem 1rem 0.4rem 1rem;
     max-width: 64rem;
     margin: 0 auto;
   }
