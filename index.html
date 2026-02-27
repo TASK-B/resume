@@ -1636,62 +1636,133 @@
       window.addEventListener('scroll', updateScrollProgress, { passive: true });
       updateScrollProgress();
 
-      // Hero fullscreen effect with smooth scaling
+      // ===== Hero Fullscreen Scroll Effect =====
+      // scroll top(0)에서 전체화면 → 스크롤 시 축소 → 일반 레이아웃 전환
       const heroSection = document.querySelector('.hero-section');
       const heroSpacer = document.getElementById('heroSpacer');
       const scrollIndicator = document.getElementById('scrollIndicator');
 
-      const SCROLL_DISTANCE = 5; // 스크롤 거리 (px)
-      const SCALE_START = 1.1; // 시작 스케일
-      const SCALE_END = 1.0; // 종료 스케일
-      const HYSTERESIS = 0.05; // 히스테리시스 (5%) - 무한루프 방지
+      // --- 설정 ---
+      const HERO_SCROLL_DISTANCE = 5; // 스케일 전환이 완료되기까지의 스크롤 거리 (px)
+      const HERO_SCALE_START = 1.1; // fullscreen 시작 스케일 (scroll top)
+      const HERO_SCALE_END = 1.0; // fullscreen 종료 스케일
+      // 히스테리시스(진동 방지): 해제와 복원 임계값을 분리하여 데드존(2~5px) 확보
+      const HERO_EXIT_SCROLL = HERO_SCROLL_DISTANCE; // scrollY >= 이 값이면 fullscreen 해제 (px)
+      const HERO_ENTER_SCROLL = 2; // scrollY <= 이 값이면 fullscreen 복원 (px)
+      const HERO_LOCK_MS = 100; // 상태 전환 후 재전환 방지 잠금 시간 (ms)
 
-      let ticking = false;
-      let isFullscreen = true;
-      let lastProgress = 1;
+      // --- 상태 ---
+      const heroInner = heroSection.querySelector('.section-inner');
+      let heroTicking = false;
+      let heroIsFullscreen = true;
+      let heroLockTimer = null; // 잠금 타이머 ID (null이 아니면 잠금 중)
 
-      function updateHeroTransform() {
-        const scrollY = window.scrollY;
-        const progress = Math.min(Math.max(1 - scrollY / SCROLL_DISTANCE, 0), 1);
+      /**
+       * scrollY를 0~1 범위의 진행률로 변환
+       * 0 = 전환 완료 (스크롤 내림), 1 = scroll top (fullscreen)
+       */
+      function getHeroProgress(scrollY) {
+        return Math.max(0, Math.min(1, 1 - scrollY / HERO_SCROLL_DISTANCE));
+      }
 
-        // GPU 가속을 위해 CSS 변수로 transform 값 전달
-        const scale = SCALE_END + (SCALE_START - SCALE_END) * progress;
+      /**
+       * CSS 커스텀 프로퍼티를 통해 hero 스케일/텍스트 크기/인디케이터 갱신
+       */
+      function applyHeroStyle(progress) {
+        const scale = HERO_SCALE_END + (HERO_SCALE_START - HERO_SCALE_END) * progress;
         heroSection.style.setProperty('--hero-scale', scale);
         heroSection.style.setProperty('--hero-progress', progress);
         scrollIndicator.style.setProperty('--indicator-opacity', progress);
-
-        // 히스테리시스 적용: 임계값을 넘어야만 상태 전환 (무한루프 방지)
-        if (isFullscreen && progress <= 0) {
-          heroSection.classList.remove('hero-fullscreen');
-          heroSpacer.classList.remove('active');
-          isFullscreen = false;
-        } else if (!isFullscreen && progress >= HYSTERESIS) {
-          heroSection.classList.add('hero-fullscreen');
-          heroSpacer.classList.add('active');
-          isFullscreen = true;
-        }
-
-        lastProgress = progress;
-        ticking = false;
       }
 
-      function handleHeroScroll() {
-        if (!ticking) {
-          requestAnimationFrame(updateHeroTransform);
-          ticking = true;
+      /**
+       * 상태 전환 후 레이아웃 변동(spacer 토글)에 의한 oscillation 방지 잠금.
+       * 기존 타이머가 있으면 취소하여 중복 콜백 실행을 방지한다.
+       */
+      function lockHeroTransition() {
+        if (heroLockTimer !== null) {
+          clearTimeout(heroLockTimer);
+        }
+        heroLockTimer = setTimeout(() => {
+          heroLockTimer = null;
+          requestAnimationFrame(updateHero); // 잠금 해제 후 상태 재평가
+        }, HERO_LOCK_MS);
+      }
+
+      /** fullscreen 모드 진입 */
+      function enterHeroFullscreen() {
+        // 현재 scrollY 기준 progress 계산 (scrollY=2 → progress=0.6)
+        const progress = getHeroProgress(window.scrollY);
+        applyHeroStyle(progress);
+        // 클래스 추가 시 .section-inner에 CSS transition이 활성화되면서
+        // scale이 애니메이션되어 깜빡임이 발생 → transition을 일시 억제
+        heroInner.style.transition = 'none';
+        heroSection.classList.add('hero-fullscreen');
+        heroSpacer.classList.add('active');
+        heroIsFullscreen = true;
+        // reflow 강제 → transition:none 상태에서 레이아웃 확정
+        void heroInner.offsetHeight;
+        // transition 복원 (CSS 규칙으로 복귀)
+        heroInner.style.transition = '';
+        lockHeroTransition();
+      }
+
+      /** fullscreen 모드 해제 */
+      function exitHeroFullscreen() {
+        heroSection.classList.remove('hero-fullscreen');
+        heroSpacer.classList.remove('active');
+        scrollIndicator.style.setProperty('--indicator-opacity', 0);
+        heroIsFullscreen = false;
+        lockHeroTransition();
+      }
+
+      /**
+       * 매 프레임 호출: 스크롤 위치에 따라 fullscreen 상태 판단 및 스타일 적용
+       */
+      function updateHero() {
+        const scrollY = window.scrollY;
+        const progress = getHeroProgress(scrollY);
+        const isLocked = heroLockTimer !== null;
+
+        if (!isLocked) {
+          // fullscreen 상태에서 충분히 스크롤 → 해제
+          if (heroIsFullscreen && scrollY >= HERO_EXIT_SCROLL) {
+            exitHeroFullscreen();
+            heroTicking = false;
+            return;
+          }
+          // 일반 상태에서 최상단으로 복귀 → fullscreen 복원
+          if (!heroIsFullscreen && scrollY <= HERO_ENTER_SCROLL) {
+            enterHeroFullscreen();
+            heroTicking = false;
+            return;
+          }
+        }
+
+        // fullscreen 상태에서만 스케일/텍스트 크기 갱신
+        if (heroIsFullscreen) {
+          applyHeroStyle(progress);
+        }
+
+        heroTicking = false;
+      }
+
+      /** scroll 이벤트 핸들러 (requestAnimationFrame throttle) */
+      function onHeroScroll() {
+        if (!heroTicking) {
+          requestAnimationFrame(updateHero);
+          heroTicking = true;
         }
       }
 
-      // Initialize
+      // --- 초기화 ---
       if (heroSection.classList.contains('hero-fullscreen')) {
         heroSpacer.classList.add('active');
-        heroSection.style.setProperty('--hero-scale', SCALE_START);
-        heroSection.style.setProperty('--hero-progress', 1);
-        scrollIndicator.style.setProperty('--indicator-opacity', 1);
+        applyHeroStyle(1); // scroll top 상태: 최대 스케일 + 인디케이터 표시
       }
 
-      window.addEventListener('scroll', handleHeroScroll, { passive: true });
-      updateHeroTransform();
+      window.addEventListener('scroll', onHeroScroll, { passive: true });
+      updateHero();
 
       // Back to top button (hide on mobile via userAgent)
       const btn = document.querySelector('.back-to-top');
