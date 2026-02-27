@@ -1408,7 +1408,7 @@ section[id] {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.6rem 1rem 0.4rem 1rem;
+    padding: 0.7rem 1rem 0.4rem 1rem;
     max-width: 64rem;
     margin: 0 auto;
   }
